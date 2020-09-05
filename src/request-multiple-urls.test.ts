@@ -43,7 +43,8 @@ describe("When requesting multiple urls", () => {
     const invalidUrl = "I will cause an error to throw";
     expect(await requestMultipleUrls([invalidUrl])).toEqual([
       {
-        error: "Only absolute URLs are supported",
+        statusCode: 500,
+        message: "Only absolute URLs are supported",
         url: invalidUrl,
       },
     ]);
@@ -58,7 +59,8 @@ describe("When requesting multiple urls", () => {
       ])
     ).toEqual([
       {
-        error: "Only absolute URLs are supported",
+        statusCode: 500,
+        message: "Only absolute URLs are supported",
         url: invalidUrl,
       },
       {
@@ -72,6 +74,17 @@ describe("When requesting multiple urls", () => {
         id: 2,
         title: "quis ut nam facilis et officia qui",
         userId: 1,
+      },
+    ]);
+  });
+
+  it("handles 404 errors in the response", async () => {
+    const invalidUrl = "https://jsonplaceholder.typicode.com/todosjjj/1";
+    expect(await requestMultipleUrls([invalidUrl])).toEqual([
+      {
+        statusCode: 404,
+        message: "Not Found",
+        url: "https://jsonplaceholder.typicode.com/todosjjj/1",
       },
     ]);
   });
