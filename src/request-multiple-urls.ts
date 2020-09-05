@@ -12,16 +12,19 @@ const buildFetchError = (response: Response): FetchErrorType => ({
   url: response.url,
 });
 
+const checkForErrors = (response: Response): Response => {
+  if (!response.ok) {
+    throw buildFetchError(response);
+  }
+  return response;
+};
+
 const fetchUrl = (url: string): Promise<unknown | FetchErrorType> => {
   return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        return buildFetchError(response);
-      }
-      return response.json();
-    })
+    .then(checkForErrors)
+    .then((response) => response.json())
     .catch((error) => ({
-      statusCode: error.status || 500,
+      statusCode: error.statusCode || error.status || 500,
       message: error.message || "Something went wrong",
       url,
     }));
