@@ -1,7 +1,19 @@
 import fetch from "node-fetch";
 
-const fetchUrl = (url: string): Promise<unknown> => {
-  return fetch(url).then((response) => response.json());
+type FetchErrorType = {
+  error: Error;
+  url: string;
+};
+
+const fetchUrl = (url: string): Promise<unknown | FetchErrorType> => {
+  return fetch(url)
+    .then((response) => response.json())
+    .catch((error) => {
+      return {
+        error: error.message || error,
+        url,
+      };
+    });
 };
 
 export const requestMultipleUrls = (urls: string[]): Promise<unknown[]> => {
