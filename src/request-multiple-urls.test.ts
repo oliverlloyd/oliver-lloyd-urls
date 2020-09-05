@@ -22,8 +22,23 @@ describe("When requesting multiple urls", () => {
       },
     ]);
   });
-  it.todo("handles when an empty array is passed");
-  it.todo("will also accept a single url as a string");
+  it("handles when an empty array is passed", async () => {
+    expect(await requestMultipleUrls([])).toEqual([]);
+  });
+  it("will also accept a single url as a string", async () => {
+    expect(
+      await requestMultipleUrls([
+        "https://jsonplaceholder.typicode.com/todos/1",
+      ])
+    ).toEqual([
+      {
+        completed: false,
+        id: 1,
+        title: "delectus aut autem",
+        userId: 1,
+      },
+    ]);
+  });
   it.todo("will populate the responses array with any errors");
   it.todo("includes the orginal url in the error response");
 });
