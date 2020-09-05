@@ -6,6 +6,13 @@ type FetchErrorType = {
   url: string;
 };
 
+type TodoType = {
+  id: string;
+  userId: string;
+  title: string;
+  completed: boolean;
+};
+
 const buildFetchError = (response: Response): FetchErrorType => ({
   statusCode: response.status || 500,
   message: response.statusText || "Something went wrong",
@@ -19,7 +26,7 @@ const checkForErrors = (response: Response): Response => {
   return response;
 };
 
-const fetchUrl = (url: string): Promise<unknown | FetchErrorType> => {
+const fetchUrl = (url: string): Promise<TodoType | FetchErrorType> => {
   return fetch(url)
     .then(checkForErrors)
     .then((response) => response.json())
@@ -30,7 +37,9 @@ const fetchUrl = (url: string): Promise<unknown | FetchErrorType> => {
     }));
 };
 
-export const requestMultipleUrls = (urls: string[]): Promise<unknown[]> => {
+export const requestMultipleUrls = (
+  urls: string[]
+): Promise<(TodoType | FetchErrorType)[]> => {
   if (typeof urls === "string") urls = [urls];
 
   const results = urls.map(fetchUrl);
