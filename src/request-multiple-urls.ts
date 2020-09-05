@@ -1,5 +1,7 @@
+import fetch from "node-fetch";
+
 const fetchUrl = (url: string): Promise<unknown> => {
-  return Promise.resolve({});
+  return fetch(url).then((response) => response.json());
 };
 
 export const requestMultipleUrls = (urls: string[]): Promise<unknown[]> => {

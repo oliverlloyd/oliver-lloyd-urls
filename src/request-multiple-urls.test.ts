@@ -7,7 +7,20 @@ describe("When requesting multiple urls", () => {
         "https://jsonplaceholder.typicode.com/todos/1",
         "https://jsonplaceholder.typicode.com/todos/2",
       ])
-    ).toEqual([{}, {}]);
+    ).toEqual([
+      {
+        completed: false,
+        id: 1,
+        title: "delectus aut autem",
+        userId: 1,
+      },
+      {
+        completed: false,
+        id: 2,
+        title: "quis ut nam facilis et officia qui",
+        userId: 1,
+      },
+    ]);
   });
   it.todo("handles when an empty array is passed");
   it.todo("will also accept a single url as a string");
