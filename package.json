@@ -4,6 +4,12 @@
   "main": "index.js",
   "author": "Oliver Lloyd <email@oliverlloyd.com>",
   "license": "MIT",
+  "scripts": {
+    "tsc": "tsc",
+    "lint": "tslint -p tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.13",
     "jest": "^26.4.2",
